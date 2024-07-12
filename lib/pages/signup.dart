@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterecom/pages/signup.dart';
+import 'package:flutterecom/pages/login.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 
-class LogIn extends StatefulWidget {
-  const LogIn({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<LogIn> createState() => _LogInState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LogInState extends State<LogIn> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +24,27 @@ class _LogInState extends State<LogIn> {
               Image.asset("images/login.png"),
               Center(
                 child: Text(
-                  "Sign In",
+                  "Sign Up",
                   style: AppWidget.semiboldTextFeildStyle(),
                 ),
               ),
               SizedBox(height: 40.0),
+              Text(
+                "Name",
+                style: AppWidget.semiboldTextFeildStyle(),
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                padding: EdgeInsets.only(left: 20.0),
+                decoration: BoxDecoration(
+                    color: Color(0xFFF4F5F9),
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: "Name"),
+                ),
+              ),
+              SizedBox(height: 20.0),
               Text(
                 "Email",
                 style: AppWidget.semiboldTextFeildStyle(),
@@ -82,7 +98,7 @@ class _LogInState extends State<LogIn> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                     child: Text(
-                      "LOGIN",
+                      "SIGN UP",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,
@@ -98,19 +114,16 @@ class _LogInState extends State<LogIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account?",
+                    "Already have an account?",
                     style: AppWidget.lightTextFeildStyle(),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUp(),
-                          ));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LogIn()));
                     },
                     child: Text(
-                      "Sign Up",
+                      "Sign In",
                       style: TextStyle(
                           color: Colors.green,
                           fontSize: 18.0,
