@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterecom/pages/bottomnav.dart';
 import 'package:flutterecom/pages/login.dart';
 import 'package:flutterecom/pages/product_detail.dart';
 import 'package:flutterecom/pages/signup.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
