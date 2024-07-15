@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutterecom/pages/login.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 
@@ -17,6 +19,44 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordcontroller = new TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
+
+  registration() async {
+    if (password != null && name != null && email != null) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email!, password: password!);
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              "Registered Succesfully",
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            )));
+      } on FirebaseException catch (e) {
+        if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text(
+                "Password provided is too weak",
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              )));
+        } else if (e.code == "email-already-in-use") {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text(
+                "Account already exsists",
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              )));
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,20 +159,32 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.all(18),
-                    width: MediaQuery.of(context).size.width / 2,
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () {
+                    if (_formkey.currentState!.validate()) {
+                      setState(() {
+                        name = namecontroller.text;
+                        email = mailcontroller.text;
+                        password = passwordcontroller.text;
+                      });
+                    }
+                    registration();
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(18),
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
