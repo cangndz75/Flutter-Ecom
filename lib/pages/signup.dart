@@ -5,7 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutterecom/pages/bottomnav.dart';
 import 'package:flutterecom/pages/home.dart';
 import 'package:flutterecom/pages/login.dart';
+import 'package:flutterecom/services/database.dart';
 import 'package:flutterecom/widget/support_widget.dart';
+import 'package:random_string/random_string.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -36,7 +38,16 @@ class _SignUpState extends State<SignUp> {
                 fontSize: 20.0,
               ),
             )));
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
+        String Id = randomAlpha(10);
+        Map<String, dynamic> userInfoMap = {
+          "Name": namecontroller.text,
+          "Email": mailcontroller.text,
+          "Id": Id,
+            "Image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcyI9Cvp53aaP9XeRn-ZKbJDH2QaWC72O26A&s"
+        };
+        await DatabaseMethods().addUserDetails(userInfoMap, Id);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => BottomNav()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
