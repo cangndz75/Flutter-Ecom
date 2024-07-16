@@ -78,7 +78,13 @@ class _LogInState extends State<LogIn> {
                   decoration: BoxDecoration(
                       color: Color(0xFFF4F5F9),
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextField(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your mail';
+                      }
+                      return null;
+                    },
                     controller: mailcontroller,
                     decoration: InputDecoration(
                         border: InputBorder.none, hintText: "Email"),
@@ -95,7 +101,13 @@ class _LogInState extends State<LogIn> {
                   decoration: BoxDecoration(
                       color: Color(0xFFF4F5F9),
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextField(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
                     controller: passwordcontroller,
                     decoration: InputDecoration(
                         border: InputBorder.none, hintText: "Password"),
