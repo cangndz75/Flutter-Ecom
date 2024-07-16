@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutterecom/pages/bottomnav.dart';
 import 'package:flutterecom/pages/home.dart';
 import 'package:flutterecom/pages/signup.dart';
@@ -126,20 +127,31 @@ class _LogInState extends State<LogIn> {
                     ),
                   ],
                 ),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.all(18),
-                    width: MediaQuery.of(context).size.width / 2,
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () {
+                    if (_formkey.currentState!.validate()) {
+                      setState(() {
+                        email = mailcontroller.text;
+                        password = passwordcontroller.text;
+                      });
+                    }
+                    userLogin();
+                  },
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(18),
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
