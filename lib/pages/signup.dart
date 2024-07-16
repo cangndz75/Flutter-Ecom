@@ -135,6 +135,7 @@ class _SignUpState extends State<SignUp> {
                       color: Color(0xFFF4F5F9),
                       borderRadius: BorderRadius.circular(20)),
                   child: TextFormField(
+                    obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
