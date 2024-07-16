@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutterecom/pages/bottomnav.dart';
+import 'package:flutterecom/pages/home.dart';
 import 'package:flutterecom/pages/login.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 
@@ -34,6 +36,7 @@ class _SignUpState extends State<SignUp> {
                 fontSize: 20.0,
               ),
             )));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
