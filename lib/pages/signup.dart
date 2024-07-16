@@ -6,8 +6,10 @@ import 'package:flutterecom/pages/bottomnav.dart';
 import 'package:flutterecom/pages/home.dart';
 import 'package:flutterecom/pages/login.dart';
 import 'package:flutterecom/services/database.dart';
+import 'package:flutterecom/services/shared_pref.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -39,6 +41,10 @@ class _SignUpState extends State<SignUp> {
               ),
             )));
         String Id = randomAlpha(10);
+        await SharedPreferenceHelper().saveUserEmail(mailcontroller.text);
+        await SharedPreferenceHelper().saveUserId(Id);
+        await SharedPreferenceHelper().saveUserName(namecontroller.text);
+        await SharedPreferenceHelper().saveUserImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcyI9Cvp53aaP9XeRn-ZKbJDH2QaWC72O26A&s");
         Map<String, dynamic> userInfoMap = {
           "Name": namecontroller.text,
           "Email": mailcontroller.text,
