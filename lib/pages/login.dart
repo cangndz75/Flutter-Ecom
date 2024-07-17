@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutterecom/pages/bottomnav.dart';
 import 'package:flutterecom/pages/home.dart';
-import 'package:flutterecom/pages/signup.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 
 class LogIn extends StatefulWidget {
