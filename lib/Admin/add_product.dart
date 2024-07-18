@@ -1,5 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutterecom/services/database.dart';
 import 'package:flutterecom/widget/support_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:random_string/random_string.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -9,6 +16,42 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
+  final ImagePicker _picker = ImagePicker();
+  File? selectedImage;
+  TextEditingController nameController = new TextEditingController();
+  Future getImage() async {
+    var image = await _picker.pickImage(source: ImageSource.gallery);
+    selectedImage = File(image!.path);
+    setState(() {});
+  }
+
+  uploadItem() async {
+    if (selectedImage != null && nameController.text != "") {
+      String addId = randomAlphaNumeric(10);
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child("blogImage").child(addId);
+      final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+      var downloadUrl = await (await task).ref.getDownloadURL();
+      Map<String, dynamic> addProduct = {
+        "Name": nameController.text,
+        "Image": downloadUrl,
+      };
+
+      await DatabaseMethods().addProduct(addProduct, value!).then((value) {
+        selectedImage = null;
+        nameController.text = "";
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text(
+              "Product has been uploaded successfully!",
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            )));
+      });
+    }
+  }
+
   String? value;
   final List<String> categoryitem = ["Watch", "Laptop", "TV", "Headphones"];
 
@@ -62,6 +105,7 @@ class _AddProductState extends State<AddProduct> {
                   color: Colors.white, borderRadius: BorderRadius.circular(20)),
               width: MediaQuery.of(context).size.width,
               child: TextField(
+                controller: nameController,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
             ),
@@ -99,7 +143,9 @@ class _AddProductState extends State<AddProduct> {
             ),
             Center(
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    uploadItem();
+                  },
                   child: Text("Add Product", style: TextStyle(fontSize: 22.0))),
             ),
           ],
