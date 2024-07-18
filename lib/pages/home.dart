@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterecom/pages/category_products.dart';
 import 'package:flutterecom/widget/support_widget.dart';
 
 class Home extends StatefulWidget {
@@ -14,6 +15,13 @@ class _HomeState extends State<Home> {
     "images/laptop.png",
     "images/watch.png",
     "images/TV.png",
+  ];
+
+  List Categoryname=[
+    "Headphone",
+    "Laptop",
+    "Watch",
+    "TV",
   ];
 
   @override
@@ -110,7 +118,7 @@ class _HomeState extends State<Home> {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return CategoryTile(image: categories[index]);
+                        return CategoryTile(image: categories[index],name: Categoryname[index],);
                       },
                     ),
                   ),
@@ -292,29 +300,34 @@ class _HomeState extends State<Home> {
 }
 
 class CategoryTile extends StatelessWidget {
-  String image;
-  CategoryTile({required this.image});
+  String image, name;
+  CategoryTile({required this.image, required this.name});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(right: 20.0),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      height: 90,
-      width: 90,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(
-            image,
-            height: 50,
-            width: 50,
-            fit: BoxFit.cover,
-          ),
-          Icon(Icons.arrow_forward)
-        ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryProduct(category: name )));
+      },
+      child: Container(
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.only(right: 20.0),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        height: 90,
+        width: 90,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              image,
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+            ),
+            Icon(Icons.arrow_forward)
+          ],
+        ),
       ),
     );
   }
